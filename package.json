@@ -13,6 +13,7 @@
     "cron": "^1.1.0",
     "open": "0.0.5",
     "phantom": "^2.1.17",
-    "robotjs": "^0.4.4"
+    "robotjs": "^0.4.4",
+    "underscore": "^1.8.3"
   }
 }

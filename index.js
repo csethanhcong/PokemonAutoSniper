@@ -2,7 +2,28 @@ var phantom = require('phantom');
 var cheerio = require('cheerio');
 var robot = require('robotjs');
 var open = require('open');
+var _ = require('underscore');
 
+var pokemonList = [
+	'Flareon',
+	'Ninetales',
+	'Slowbro',
+	'Snorlax',
+	'Lapras',
+	'Blastoise',
+	'Dragonite',
+	'Arcanine',
+	'Gyarados',
+	'Venusaur',
+	'Charizard',
+	'Vaporeon',
+	'Kangaskhan',
+	'Alakazam'
+];
+
+function inFilterList(pokemon) {
+	return _.contains(pokemonList, pokemon);
+}
 
 function run() {
 	var sitepage = null;
@@ -25,8 +46,11 @@ function run() {
 	        console.log('[INFO] Running........');
 
 	        var firstPkmUrl = $('#pokemon-list li:nth-child(1) span.secondary-content a').attr('href');
-	        console.log('[INFO] Catching Pokemon at ', firstPkmUrl);
-			openUrl(firstPkmUrl);
+			var pokemonName = $('#pokemon-list li:nth-child(1) span.title').html();
+			if (inFilterList(pokemonName)) {
+		        console.log('[INFO] Catching Pokemon at ', firstPkmUrl);
+				openUrl(firstPkmUrl);
+			}
 
 	        sitepage.close();
 	        phInstance.exit();
@@ -44,7 +68,7 @@ function openUrl(url) {
 		setTimeout(function() {
 			console.log('[INFO] Opening URL at ', url);
 			pressEnter();
-		}, 5000);
+		}, 2000);
 
 		// Close the Sniper Window
 		setTimeout(function() {
@@ -63,7 +87,7 @@ function pressEnter() {
 
 
 var CronJob = require('cron').CronJob;
-var job = new CronJob('*/30 * * * * *', function() {
+var job = new CronJob('*/45 * * * * *', function() {
   /*
    * Runs every minute
    */
